@@ -7,6 +7,10 @@
 *.obj
 *.elf
 
+/gtk1/gtk1
+/gtk2/gtk2
+/gtk3/gtk3
+
 # Linker output
 *.ilk
 *.map

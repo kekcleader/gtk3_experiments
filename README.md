@@ -1,3 +1,5 @@
+![GTK+ 3 program in C screenshot](screenshot.png)
+
 # Эксперименты с GTK+ 3 на Си и Обероне
 
 *See English below*
