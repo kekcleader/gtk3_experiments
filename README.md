@@ -17,9 +17,6 @@ make run
 
 # GTK+ 3 experiments in C and Oberon
 
-*See English below*
-
-
 ## Setup (Debian)
 ```
 sudo apt-get install libgtk-3-dev gcc make
