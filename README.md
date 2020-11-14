@@ -1,2 +1,32 @@
-# gtk3_experiments
-GTK+ 3 experiments in C and Oberon
+# Эксперименты с GTK+ 3 на Си и Обероне
+
+*See English below*
+
+## Установка (Дебиан)
+```
+sudo apt-get install libgtk-3-dev gcc make
+```
+
+## Компиляция и запуск
+```
+cd gtk1
+make run
+```
+
+-----------
+
+# GTK+ 3 experiments in C and Oberon
+
+*See English below*
+
+
+## Setup (Debian)
+```
+sudo apt-get install libgtk-3-dev gcc make
+```
+
+## Compile & Run
+```
+cd gtk1
+make run
+```
