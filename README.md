@@ -40,7 +40,7 @@ make run
 
 | Имя / Name | Описание / Description |
 | --------- | ----------- |
-| [g001\_simplest/gtk1.c](g001_simplest) | Выводит маленькое окно с кнопкой. A small window with a button. |
-| [g002\_cairo/gtk2.c](g002_cairo) | Соединяет указываемые мышью точки отрезками. Connects points (set with a mouse) with lines. |
-| [g003\_tiles/gtk3.c](g003_tiles) | Рисует части картинки. Draws parts of an image. |
-| [g004\_paint/gtk4.c](g004_paint) | Мышью быстро рисуются квадраты. Squares are quickly painted with a mouse. |
+| [g001\_simplest](g001_simplest/gtk1.c) | Выводит маленькое окно с кнопкой. A small window with a button. |
+| [g002\_cairo](g002_cairo/gtk2.c) | Соединяет указываемые мышью точки отрезками. Connects points (set with a mouse) with lines. |
+| [g003\_tiles](g003_tiles/gtk3.c) | Рисует части картинки. Draws parts of an image. |
+| [g004\_paint](g004_paint/gtk4.c) | Мышью быстро рисуются квадраты. Squares are quickly painted with a mouse. |
