@@ -2,12 +2,12 @@
 *.exe
 *.out
 
-/gtk1/gtk1
-/gtk2/gtk2
-/gtk3/gtk3
-/gtk4/gtk4
-/gtk5/gtk5
-/gtk6/gtk6
-/gtk7/gtk7
-/gtk8/gtk8
-/gtk9/gtk9
+/g00*/gtk1
+/g00*/gtk2
+/g00*/gtk3
+/g00*/gtk4
+/g00*/gtk5
+/g00*/gtk6
+/g00*/gtk7
+/g00*/gtk8
+/g00*/gtk9

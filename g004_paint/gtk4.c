@@ -3,19 +3,8 @@
 
 cairo_surface_t *surface = NULL;
 
-static void draw_pixbuf(cairo_t *cr, GdkPixbuf *pixbuf, int src_x, int src_y,
-    int dest_x, int dest_y, int w, int h) {
-  cairo_save(cr);
-  cairo_translate(cr, dest_x, dest_y);
-  gdk_cairo_set_source_pixbuf(cr, pixbuf, -src_x, -src_y);
-  cairo_rectangle(cr, 0, 0, w, h);
-  cairo_fill(cr);
-  cairo_restore(cr);
-}
-
-static void clear_surface() {
-  cairo_t *cr;
-  cr = cairo_create(surface);
+static void clear_surface(cairo_surface_t *sur) {
+  cairo_t *cr = cairo_create(sur);
 
   cairo_set_source_rgb(cr, 0, 0.8, 0);
   cairo_paint(cr);
@@ -39,7 +28,7 @@ static void paint(GtkWidget *widget, int x, int y) {
   cairo_t *cr;
   cr = cairo_create(surface);
 
-  cairo_set_source_rgb(cr, 0, 0, 0);
+  cairo_set_source_rgb(cr, 0, 0.4, 1);
   cairo_rectangle(cr, x - 3, y - 3, 7, 7);
   cairo_fill(cr);
 
@@ -60,27 +49,34 @@ static gboolean on_click(GtkWidget *win, GdkEventButton *event, gpointer data) {
     gdouble y = event->y;
     paint(win, x, y);
   } else if (event->button == GDK_BUTTON_SECONDARY) {
-    clear_surface();
+    clear_surface(surface);
     gtk_widget_queue_draw(win);
   }
   return TRUE;
 }
 
 static gboolean on_configure(GtkWidget *win, GdkEventConfigure *event, gpointer data) {
+  cairo_surface_t *new;
+  gint w, h;
+
+  gtk_window_get_size(GTK_WINDOW(win), &w, &h);
+  new = gdk_window_create_similar_surface(
+    gtk_widget_get_window(win), CAIRO_CONTENT_COLOR, w, h);
+  clear_surface(new);
+
   if (surface) {
+    cairo_t *cr = cairo_create(new);
+    cairo_set_source_surface(cr, surface, 0, 0);
+    cairo_paint(cr);
+    cairo_destroy(cr);
+    
     cairo_surface_destroy(surface);
   }
 
-  surface = gdk_window_create_similar_surface(
-    gtk_widget_get_window(win), CAIRO_CONTENT_COLOR,
-    gtk_widget_get_allocated_width(win),
-    gtk_widget_get_allocated_height(win));
-
-  clear_surface();
+  surface = new;
 
   gdk_window_set_event_compression(gtk_widget_get_window(win), FALSE);
-
-  return TRUE;
+  return FALSE;
 }
 
 static void on_activate(GtkApplication *app) {
