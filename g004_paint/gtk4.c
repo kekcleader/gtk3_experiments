@@ -2,11 +2,13 @@
 #include <cairo.h>
 
 cairo_surface_t *surface = NULL;
+int lastX, lastY;
+
 
 static void clear_surface(cairo_surface_t *sur) {
   cairo_t *cr = cairo_create(sur);
 
-  cairo_set_source_rgb(cr, 0, 0.8, 0);
+  cairo_set_source_rgb(cr, 0, 0, 0);
   cairo_paint(cr);
 
   cairo_destroy(cr);
@@ -24,21 +26,53 @@ static void on_destroy() {
   }
 }
 
-static void paint(GtkWidget *widget, int x, int y) {
+static void paint(GtkWidget *widget, int x1, int y1, int x2, int y2) {
+  int t;
+  int w, h, hh, x, y, yy1;
   cairo_t *cr;
   cr = cairo_create(surface);
+  cairo_set_source_rgb(cr, 0.3, 0.7, 1);
 
-  cairo_set_source_rgb(cr, 0, 0.4, 1);
-  cairo_rectangle(cr, x - 3, y - 3, 7, 7);
+  if (x1 > x2) {
+    t = x1; x1 = x2; x2 = t;
+    t = y1; y1 = y2; y2 = t;
+  }
+
+  w = x2 - x1 + 1;
+  h = y2 - y1;
+  hh = h;
+  if (h < 0) { h = -h; hh--; }
+  h++;
+
+  if (y1 < y2) yy1 = y1; else yy1 = y2;
+  gtk_widget_queue_draw_area(widget, x1, yy1, w, h);
+
+  if (w > h) {
+    for (x = x1; x <= x2; x++) {
+      y = y1 + (x - x1) * hh / w;
+      cairo_rectangle(cr, x, y, 1, 1);
+    }
+  } else {
+    if (y1 > y2) {
+      t = x1; x1 = x2; x2 = t;
+      t = y1; y1 = y2; y2 = t;
+      w = -w;
+    }
+    for (y = y1; y <= y2; y++) {
+      x = x1 + (y - y1) * w / h;
+      cairo_rectangle(cr, x, y, 1, 1);
+    }
+  }
+
   cairo_fill(cr);
-
   cairo_destroy(cr);
-  gtk_widget_queue_draw_area(widget, x - 3, y - 3, 7, 7);
 }
 
 static gboolean on_move(GtkWidget *win, GdkEventMotion *event, gpointer data) {
   if (event->state & GDK_BUTTON1_MASK) {
-    paint(win, event->x, event->y);
+    paint(win, lastX, lastY, event->x, event->y);
+    lastX = event->x;
+    lastY = event->y;
   }
   return TRUE;
 }
@@ -47,7 +81,9 @@ static gboolean on_click(GtkWidget *win, GdkEventButton *event, gpointer data) {
   if (event->button == GDK_BUTTON_PRIMARY) {
     gdouble x = event->x;
     gdouble y = event->y;
-    paint(win, x, y);
+    paint(win, event->x, event->y, event->x, event->y);
+    lastX = event->x;
+    lastY = event->y;
   } else if (event->button == GDK_BUTTON_SECONDARY) {
     clear_surface(surface);
     gtk_widget_queue_draw(win);
@@ -84,6 +120,7 @@ static void on_activate(GtkApplication *app) {
   gtk_window_set_default_size(GTK_WINDOW(win), 500, 350);
   gtk_window_set_title(GTK_WINDOW(win), "GTK Test 4");
   gtk_widget_set_app_paintable(win, FALSE);
+  gtk_window_maximize(GTK_WINDOW(win));
 
   g_signal_connect(win, "destroy", G_CALLBACK(on_destroy), NULL);
   g_signal_connect(win, "motion-notify-event", G_CALLBACK(on_move), NULL);
