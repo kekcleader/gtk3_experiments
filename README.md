@@ -44,4 +44,5 @@ make run
 | [g002\_cairo](g002_cairo/gtk2.c) | Соединяет указываемые мышью точки отрезками. Connects points (set with a mouse) with lines. |
 | [g003\_tiles](g003_tiles/gtk3.c) | Рисует части картинки. Draws parts of an image. |
 | [g004\_paint](g004_paint/gtk4.c) | Мышью быстро рисуются отрезки. Lines are quickly painted with a mouse. |
-| [g005\_keyboard](g005_keyboard/gtk4.c) | В консоль выводятся нажимаемые клавиши. The pressed keys are printed to console. |
+| [g005\_keyboard](g005_keyboard/gtk5.c) | В консоль выводятся нажимаемые клавиши. The pressed keys are printed to console. |
+| [g006\_pixbuf](g006_pixbuf/gtk6.c) | Манипуляция массивом пикселей. Accessing individual pixels in an array. |
