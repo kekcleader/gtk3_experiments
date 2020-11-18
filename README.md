@@ -46,3 +46,4 @@ make run
 | [g004\_paint](g004_paint/gtk4.c) | Мышью быстро рисуются отрезки. Lines are quickly painted with a mouse. |
 | [g005\_keyboard](g005_keyboard/gtk5.c) | В консоль выводятся нажимаемые клавиши. The pressed keys are printed to console. |
 | [g006\_pixbuf](g006_pixbuf/gtk6.c) | Манипуляция массивом пикселей. Accessing individual pixels in an array. |
+| [g007\_fastpixels](g007_fastpixels/gtk7.c) | Заполнение всего окна пикселями. Filling the whole window with pixels. |
